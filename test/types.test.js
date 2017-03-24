@@ -3,7 +3,7 @@ import {
   ENUM_TYPE, NULL_TYPE, NUMBER_TYPE, OBJECT_TYPE, ONE_OF_TYPE, STRING_TYPE, REF_TYPE
 } from '../src/types'
 
-const junk = { foo: 'bar', bar: 'foo', [Symbol()]: 'foobar', 1: 2 }
+const junk = { foo: 'bar', bar: 'foo', [Symbol('foo')]: 'foobar', 1: 2 }
 
 describe('types', () => {
   it('should classify as UNKNOWN_TYPE', () => {
