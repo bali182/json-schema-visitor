@@ -1,5 +1,4 @@
 import createVisitor from '../src/index'
-import { capitalize } from '../src/utils'
 import {
   ALL_OF_TYPE, ANY_OF_TYPE, UNKNOWN_TYPE, ARRAY_TYPE, BOOLEAN_TYPE, ENUM_TYPE,
   NULL_TYPE, NUMBER_TYPE, OBJECT_TYPE, ONE_OF_TYPE, STRING_TYPE, REF_TYPE
@@ -25,7 +24,7 @@ const types = [
 
 const createCompleteVisitor = visitCreator => createVisitor(
   types.reduce((visitor, type) => {
-    visitor[`visit${capitalize(type)}Type`] = visitCreator(type)
+    visitor[type] = visitCreator(type)
     return visitor
   }, {})
 )
@@ -85,10 +84,10 @@ describe('visitor', () => {
 
   it('should properly work if not all visitor methods are given', () => {
     const gappyVisitor = createVisitor({
-      visitStringType() {
+      string() {
         return STRING_TYPE
       },
-      visitObjectType() {
+      object() {
         return OBJECT_TYPE
       }
     })
@@ -110,10 +109,10 @@ describe('visitor', () => {
 
   it('should use defaultVisit when not all visit methods given', () => {
     const gappyVisitor = createVisitor({
-      visitStringType() {
+      string() {
         return STRING_TYPE
       },
-      visitObjectType() {
+      object() {
         return OBJECT_TYPE
       }
     }, () => 'foo')
@@ -136,7 +135,7 @@ describe('visitor', () => {
   it('should inject the correct this context', () => {
     const visitorUsingThis = createVisitor({
       foo: 'bar',
-      visitStringType() {
+      string() {
         return this.foo
       }
     })
