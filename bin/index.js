@@ -13,14 +13,10 @@ var isDefined = function isDefined(input) {
 };
 
 var isFunction = function isFunction(input) {
-  return !!(input && input.constructor && input.call && input.apply);
+  return Boolean(input && input.constructor && input.call && input.apply);
 };
 
-var capitalize = function capitalize(input) {
-  return input.length && typeof input === 'string' ? input.charAt(0).toUpperCase() + input.slice(1).toLowerCase() : input;
-};
-
-var noop = function noop() {};
+var noop = function noop() {/* noop */};
 
 var UNKNOWN_TYPE = 'unknown';
 var OBJECT_TYPE = 'object';
@@ -89,7 +85,7 @@ var createVisitor = function createVisitor() {
     }
 
     var type = schemaType(schema);
-    var visitMethod = visitor['visit' + capitalize(type) + 'Type'];
+    var visitMethod = visitor[type];
     var method = visitMethod && isFunction(visitMethod) ? visitMethod : defaultVisit;
     return method.apply(visitor, [schema].concat(args));
   };
