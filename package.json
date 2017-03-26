@@ -1,12 +1,13 @@
 {
   "name": "json-schema-visitor",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Package for inspecting JSON schemas",
-  "main": "bin/index.js",
+  "main": "index.js",
   "scripts": {
     "build": "rollup -c rollup.config.js",
     "lint": "eslint **/*.js --config .eslintrc",
-    "test": "jest"
+    "test": "jest",
+    "prepublish": "npm run lint && npm test && npm run build"
   },
   "repository": {
     "type": "git",

@@ -9,5 +9,5 @@ export default {
       ['es2015', { modules: false }]
     ]
   })],
-  dest: 'bin/index.js'
+  dest: 'index.js'
 }
