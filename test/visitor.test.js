@@ -107,15 +107,18 @@ describe('visitor', () => {
     expect(gappyVisitor(oneOfSchema)).toBeUndefined()
   })
 
-  it('should use defaultVisit when not all visit methods given', () => {
+  it('should use any when not all visit methods given', () => {
     const gappyVisitor = createVisitor({
       string() {
         return STRING_TYPE
       },
       object() {
         return OBJECT_TYPE
+      },
+      any() {
+        return 'foo'
       }
-    }, () => 'foo')
+    })
 
     expect(gappyVisitor(stringSchema)).toBe(STRING_TYPE)
     expect(gappyVisitor(objectSchema)).toBe(OBJECT_TYPE)
