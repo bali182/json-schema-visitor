@@ -1,6 +1,6 @@
 {
   "name": "json-schema-visitor",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Package for inspecting JSON schemas",
   "main": "index.js",
   "scripts": {
