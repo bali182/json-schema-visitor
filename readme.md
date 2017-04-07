@@ -48,12 +48,17 @@ expect(visitor('foo')).toBeUndefined()
 
 ### Default visit method
 
+You don't have to specify each visit method. You can have a fallback method named `any` which handles all unhandled cases.
+
 ```js
 const visitor = createVisitor({
   object(schema) {
     return 'An object schema'
+  },
+  any(schema) {
+    return 'Everything else'
   }
-}, schema => 'Everything else')
+})
 
 // Case handled
 expect(visitor({ type: 'object' })).toBe('An object schema')
@@ -66,6 +71,8 @@ expect(visitor('foo')).toBe('Everything else')
 
 ### Extra arguments
 
+You can pass extra arguments to the visitor. These arguments will be paseed as second, third, etc. arguments to each visit method.
+
 ```js
 const visitor = createVisitor({
   object(schema, someArg, otherArg) {
@@ -77,6 +84,8 @@ expect(visitor({ type: 'object' }, 'foo', 42)).toBe('An object schema. Also args
 ```
 
 ### Recursive traversing
+
+This visitor recursively visits every element of the schema, and applies a callback on them.
 
 ```js
 const visitor = createVisitor({
@@ -102,7 +111,10 @@ const visitor = createVisitor({
     callback(schema)
     schema.oneOf.forEach(childSchema => visitor(childSchema, callback))
   }
-}, (schema, callback) => callback(schema))
+  any(schema, callback) {
+    callback(schema)
+  }
+})
 
 visitor(someSchema, schema => console.log(schema))
 ```
